@@ -48,7 +48,7 @@ class ViewController: UIViewController {
         self.paintArea(red: CGFloat(redSlider.value), green: CGFloat(greenSlider.value), blue: CGFloat(blueSlider.value))
     }
     
-    private func rounded(value: Float)->Float {
+    private func rounded(value: Float) -> Float {
         return round(100 * value) / 100
     }
     
