@@ -15,48 +15,55 @@ class ViewController: UIViewController {
     @IBOutlet weak var greenLabel: UILabel!
     @IBOutlet weak var blueLabel: UILabel!
     
+    
     @IBOutlet weak var redSlider: UISlider!
     @IBOutlet weak var greenSlider: UISlider!
     @IBOutlet weak var blueSlider: UISlider!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        redSlider.value = 0
-        greenSlider.value = 0
-        blueSlider.value = 0
         
-        self.paintArea(red: CGFloat(redSlider.value), green: CGFloat(greenSlider.value), blue: CGFloat(blueSlider.value))
+        setSliderToLabel(label: redLabel, slider: redSlider)
+        setSliderToLabel(label: greenLabel, slider: greenSlider)
+        setSliderToLabel(label: blueLabel, slider: blueSlider)
+        
+        paintArea()
     }
-
-
+    
+    
     @IBAction func redSliderAction() {
-        redLabel.text = String(self.rounded(value: redSlider.value))
+        setSliderToLabel(label: redLabel, slider: redSlider)
         
-        self.paintArea(red: CGFloat(redSlider.value), green: CGFloat(greenSlider.value), blue: CGFloat(blueSlider.value))
+        paintArea()
     }
     
     @IBAction func greenSliderAction() {
-        greenLabel.text = String(self.rounded(value: greenSlider.value))
+        setSliderToLabel(label: greenLabel, slider: greenSlider)
         
-        self.paintArea(red: CGFloat(redSlider.value), green: CGFloat(greenSlider.value), blue: CGFloat(blueSlider.value))
+        paintArea()
     }
     
     @IBAction func blueSliderAction() {
-        blueLabel.text = String(self.rounded(value: blueSlider.value))
+        setSliderToLabel(label: blueLabel, slider: blueSlider)
         
-        self.paintArea(red: CGFloat(redSlider.value), green: CGFloat(greenSlider.value), blue: CGFloat(blueSlider.value))
+        paintArea()
+    }
+    
+    private func setSliderToLabel(label: UILabel, slider: UISlider) {
+        label.text = String(rounded(value: slider.value))
     }
     
     private func rounded(value: Float) -> Float {
-        return round(100 * value) / 100
+         round(100 * value) / 100
     }
     
-    private func paintArea(red: CGFloat, green: CGFloat, blue: CGFloat){
+    private func paintArea(){
         areaToBePainted.backgroundColor = UIColor(
-            displayP3Red: red,
-            green: green,
-            blue: blue,
+            displayP3Red: CGFloat(redSlider.value),
+            green: CGFloat(greenSlider.value),
+            blue: CGFloat(blueSlider.value),
             alpha: 1.0
         )
     }
