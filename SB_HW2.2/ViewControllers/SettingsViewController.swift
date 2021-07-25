@@ -29,9 +29,16 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        areaToBePainted.layer.cornerRadius = 15
+        
         redTF.delegate = self
         greenTF.delegate = self
         blueTF.delegate = self
+        
+        redSlider.value = Float(colorArea.rgba.red)
+        greenSlider.value = Float(colorArea.rgba.green)
+        blueSlider.value = Float(colorArea.rgba.blue)
+        
         
         areaToBePainted.backgroundColor = colorArea
         
@@ -133,7 +140,7 @@ extension SettingsViewController: UITextFieldDelegate {
             setValueLabel()
             
         } else {
-            showAlert(title: "Ooops!", message: "Field must be float!")
+            showAlert(title: "Wrong format!", message: "Field must be float!")
         }
     }
     
@@ -172,5 +179,21 @@ extension SettingsViewController {
     
     @objc func doneButtonAction() {
         view.endEditing(true);
+    }
+}
+
+
+// MARK: - Parse rgb value
+
+extension UIColor {
+    
+    var rgba: (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) {
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+        getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        
+        return (red, green, blue, alpha)
     }
 }
