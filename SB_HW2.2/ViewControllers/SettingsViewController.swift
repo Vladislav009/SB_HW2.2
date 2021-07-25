@@ -33,10 +33,6 @@ class SettingsViewController: UIViewController {
         greenTF.delegate = self
         blueTF.delegate = self
         
-        addDoneButtonOnKeyboard(redTF)
-        addDoneButtonOnKeyboard(greenTF)
-        addDoneButtonOnKeyboard(blueTF)
-        
         areaToBePainted.backgroundColor = colorArea
         
         setValueLabel()
@@ -48,12 +44,9 @@ class SettingsViewController: UIViewController {
         view.endEditing(true)
     }
     
-    
-    
     @IBAction func doneBtnPressed() {
         delegate.setNewBackground(color: areaToBePainted.backgroundColor ?? UIColor.white)
     }
-    
     
     @IBAction func slidersAction(_ sender: UISlider) {
         switch sender {
@@ -114,6 +107,10 @@ extension SettingsViewController: UITextFieldDelegate {
             doneButtonAction()
         }
         return true
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        addDoneButtonOnKeyboard(textField)
     }
     
     
