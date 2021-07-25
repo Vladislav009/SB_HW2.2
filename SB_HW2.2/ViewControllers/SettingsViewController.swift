@@ -29,21 +29,16 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        areaToBePainted.layer.cornerRadius = 15
-        
         redTF.delegate = self
         greenTF.delegate = self
         blueTF.delegate = self
         
-        redSlider.value = Float(colorArea.rgba.red)
-        greenSlider.value = Float(colorArea.rgba.green)
-        blueSlider.value = Float(colorArea.rgba.blue)
-        
-        
-        areaToBePainted.backgroundColor = colorArea
-        
-        setValueLabel()
-        setValueTF()
+        setUpUI()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -69,6 +64,22 @@ class SettingsViewController: UIViewController {
         }
         
         paintArea()
+    }
+    
+    // MARK: - Setup UI
+    private func setUpUI() {
+        navigationController?.isNavigationBarHidden = true
+        
+        areaToBePainted.layer.cornerRadius = 15
+        redSlider.value = Float(colorArea.rgba.red)
+        greenSlider.value = Float(colorArea.rgba.green)
+        blueSlider.value = Float(colorArea.rgba.blue)
+        
+        
+        areaToBePainted.backgroundColor = colorArea
+        
+        setValueLabel()
+        setValueTF()
     }
     
     
@@ -126,6 +137,12 @@ extension SettingsViewController: UITextFieldDelegate {
         guard let text = textField.text else { return }
         
         if let currentValue = Float(text) {
+            
+            if currentValue > 1.0 {
+                showAlert(title: "Wrong format!", message: "The field must be between 0.0 and 1.0")
+                textField.text = ""
+                return
+            }
             
             switch textField {
             case redTF:
